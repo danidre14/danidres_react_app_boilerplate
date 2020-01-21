@@ -14,19 +14,29 @@
     webpack-cli: allows you to run webpack commands (could be used for build script)
 ]
 
-[//4. npm i (--save-dev/-D) babel-core babel-loader babel-preset-env babel-preset-react html-webpack-plugin//]
-4. npm i (--save-dev/-D) @babel/core babel-loader @babel/preset-env @babel/preset-react html-webpack-plugin -- in terminal
-{  npm i --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react html-webpack-plugin  }
+[//4. npm i (--save-dev/-D) babel-core babel-preset-env babel-preset-react html-webpack-plugin//]
+4. npm i (--save-dev/-D) @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin -- in terminal
+{  npm i --save-dev @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin  }
 [
     babel is needed since react uses ES6 classes/import etc that needs to be transpiled to ES5-/browser friendly code (depending on which browser is being used)
 
-    [//babel-core//] @babel/core: the core transpiler
+    [//babel-core//]
+    @babel/core: the core transpiler
+    [//babel-preset-env//]
+    @babel/preset-env: a babel plugin that takes the place of babel-preset-es2015;
+                      for compiling Javascript ES6 code down to ES5
+    [//babel-preset-react//]
+    @babel/preset-react: a babel plugin for compiling JSX and other stuff down to Javascript
+    html-webpack-plugin: would generate build html file
+]
+
+5. npm i (--save-dev/-D) babel-loader style-loader css-loader -- in terminal
+{  npm i --save-dev babel-loader style-loader css-loader  }
+[
     babel-loader: to compile JSX;
                   the Webpack loader responsible for taking in the ES6 code and making it understandable by the browser of choice
-    [//babel-preset-env//] @babel/preset-env: a babel plugin that takes the place of babel-preset-es2015;
-                      for compiling Javascript ES6 code down to ES5
-    [//babel-preset-react//] @babel/preset-react: a babel plugin for compiling JSX and other stuff down to Javascript
-    html-webpack-plugin: would generate build html file
+    style-loader: create style tags to place styles
+    css-loader: to create css files when required in app
 ]
 
 5. Create webpack config file -- in root folder
@@ -56,9 +66,14 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      }, {
+        //look for css files that we want babel to compile
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
+  
 
   // add a custom index.html as the template
   plugins: [

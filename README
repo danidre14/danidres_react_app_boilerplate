@@ -2,9 +2,9 @@
 {  npm init  }
 [Create package.json file]
 
-2. npm i react react-dom -- in terminal
-{  npm i react react-dom  }
-[Install React and DOM for Browsers]
+2. npm i react react-dom react-dom-router -- in terminal
+{  npm i react react-dom react-dom-router  }
+[Install React, DOM, and React Routers for Browsers]
 
 3. npm i (--save-dev/-D) webpack webpack-dev-server webpack-cli -- in terminal
 {  npm i --save-dev webpack webpack-dev-server webpack-cli  }

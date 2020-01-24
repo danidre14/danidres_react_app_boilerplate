@@ -52,7 +52,13 @@ module.exports = {
   would be just one bundled javascript file*/
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "index_bundle.js"
+    filename: "index_bundle.js",
+    publicPath: "/" //all scripts would be served using this path
+  },
+  
+  // prevent refreshing pages in development from returning Cannot GET
+  devServer: {
+    historyApiFallback: true
   },
 
   //specifying loader

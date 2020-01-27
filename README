@@ -2,20 +2,24 @@
 {  npm init  }
 [Create package.json file]
 
-2. npm i react react-dom react-dom-router -- in terminal
-{  npm i react react-dom react-dom-router  }
-[Install React, DOM, and React Routers for Browsers]
+2. npm i react react-dom react-dom-router @babel/runtime -- in terminal
+{  npm i react react-dom react-dom-router @babel/runtime  }
+[
+    Install React, DOM, and React Routers for Browsers
+    @babel/runtime: for using async await in production
+]
 
 3. npm i (--save-dev/-D) webpack webpack-dev-server webpack-cli -- in terminal
-{  npm i --save-dev webpack webpack-dev-server webpack-cli  }
+{  npm i --save-dev webpack webpack-dev-server webpack-cli html-webpack-plugin  }
 [
     webpack: so all React code would be compiled/bundled into one file
     webpack-dev-server: for live reloading etc during development
     webpack-cli: allows you to run webpack commands (could be used for build script)
+    html-webpack-plugin: would generate build html file
 ]
 
 [//4. npm i (--save-dev/-D) babel-core babel-preset-env babel-preset-react html-webpack-plugin//]
-4. npm i (--save-dev/-D) @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin -- in terminal
+4. npm i (--save-dev/-D) @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime -- in terminal
 {  npm i --save-dev @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin  }
 [
     babel is needed since react uses ES6 classes/import etc that needs to be transpiled to ES5-/browser friendly code (depending on which browser is being used)
@@ -24,10 +28,11 @@
     @babel/core: the core transpiler
     [//babel-preset-env//]
     @babel/preset-env: a babel plugin that takes the place of babel-preset-es2015;
-                      for compiling Javascript ES6 code down to ES5
+                       for compiling Javascript ES6 code down to ES5
     [//babel-preset-react//]
     @babel/preset-react: a babel plugin for compiling JSX and other stuff down to Javascript
-    html-webpack-plugin: would generate build html file
+    @babel/plugin-transform-runtime: enables the re-use of Babel's injected helper code;
+                                     for using async await in development
 ]
 
 5. npm i (--save-dev/-D) babel-loader style-loader css-loader -- in terminal
@@ -39,7 +44,7 @@
     css-loader: to create css files when required in app
 ]
 
-5. Create webpack config file -- in root folder
+6. Create webpack config file -- in root folder
 {  webpack.config.js  }
 /*
 const path = require("path");
@@ -91,7 +96,7 @@ module.exports = {
 
 */
 
-6. Create ./src/index.js file/folder -- in root folder
+7. Create ./src/index.js file/folder -- in root folder
 {  src/index.js  }
 /*
 import React from "react";
@@ -100,7 +105,7 @@ import ReactDOM from "react-dom";
 ReactDOM.render(<h1>Your React Application Boilerplate</h1>, document.getElementById("app"));
 */
 
-7. Create template html file -- in src folder
+8. Create template html file -- in src folder
 {  index.html  }
 /*
 <!DOCTYPE html>
@@ -118,16 +123,17 @@ ReactDOM.render(<h1>Your React Application Boilerplate</h1>, document.getElement
 </html>
 */
 
-8. Create .babelrc file -- in root folder
+9. Create .babelrc file -- in root folder
 {  .babelrc  }
 /*
 {
-    "presets": ["@babel/preset-env", "@babel/preset-react"]
+    "presets": ["@babel/preset-env", "@babel/preset-react"],
+    "plugins": ["@babel/plugin-transform-runtime"]
 }
 */
-[For babel-env and babel-react presets/plugins]
+[For babel-env and babel-react presets, and the babel-runtime plugin]
 
-9. Add scripts to run the dev server, and build it into the dist folder -- in package.json file
+10. Add scripts to run the dev server, and build it into the dist folder -- in package.json file
 /*
     "start": "webpack-dev-server --mode development --open --hot"
     //to run the dev server

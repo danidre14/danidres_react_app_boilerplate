@@ -61,8 +61,12 @@ module.exports = {
     publicPath: "/" //all scripts would be served using this path
   },
   
-  // prevent refreshing pages in development from returning Cannot GET
   devServer: {
+    // proxy default API requests to backend server (change to development server port
+    proxy: {
+      "/api": "http://localhost:5000"
+    },
+    // prevent refreshing pages in development from returning Cannot GET
     historyApiFallback: true
   },
 

@@ -21,8 +21,8 @@
 ]
 
 [//4. npm i (--save-dev/-D) babel-core babel-preset-env babel-preset-react html-webpack-plugin//]
-4. npm i (--save-dev/-D) @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime -- in terminal
-{  npm i --save-dev @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin  }
+4. npm i (--save-dev/-D) @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime @babel/plugin-proposal-class-properties @babel/plugin-transform-react-jsx-source -- in terminal
+{  npm i --save-dev @babel/core @babel/preset-env @babel/preset-react html-webpack-plugin @babel/plugin-proposal-class-properties @babel/plugin-transform-react-jsx-source  }
 [
     babel is needed since react uses ES6 classes/import etc that needs to be transpiled to ES5-/browser friendly code (depending on which browser is being used)
 
@@ -35,6 +35,10 @@
     @babel/preset-react: a babel plugin for compiling JSX and other stuff down to Javascript
     @babel/plugin-transform-runtime: enables the re-use of Babel's injected helper code;
                                      for using async await in development
+    @babel/plugin-proposal-class-properties: transforms static class properties as well as properties 
+                                             declared with the property initializer syntax
+    @babel/plugin-transform-react-jsx-source: add a __source prop to all JSX Elements;
+                                              for line error numbers in dev testing
 ]
 
 5. npm i (--save-dev/-D) babel-loader style-loader css-loader -- in terminal
@@ -79,6 +83,11 @@ module.exports = {
         //look for js/jsx files that we want babel to compile
         test: /\.(js|jsx)$/,
 
+        //import both js and jsx files without appending extension to name
+        resolve: {
+          extensions: [".js", ".jsx"]
+        },
+
         exclude: /node_modules/, //so nothing happens to files inside the folder
         use: {
           loader: "babel-loader"
@@ -102,17 +111,30 @@ module.exports = {
 
 */
 
-7. Create ./src/index.js file/folder -- in root folder
-{  src/index.js  }
+7. Create ./src/index.js, ./src/App.js, and ./src/Components file(s)/folder(s) -- in root folder
+{  src/index.js, src/App.js, src/Component  }
 /*
+//src/index.js
 import React from "react";
 import ReactDOM from "react-dom";
+import App from "./App";
 
-ReactDOM.render(<h1>Your React Application Boilerplate</h1>, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));
+
+//src/App.js
+import React from "react";
+
+function App() {
+  return (<>
+    <h1>Your React Application Boilerplate</h1>
+  </>);
+}
+
+export default App;
 */
 
 8. Create template html file -- in src folder
-{  index.html  }
+{  src/index.html  }
 /*
 <!DOCTYPE html>
 <html lang="en">
@@ -134,7 +156,11 @@ ReactDOM.render(<h1>Your React Application Boilerplate</h1>, document.getElement
 /*
 {
     "presets": ["@babel/preset-env", "@babel/preset-react"],
-    "plugins": ["@babel/plugin-transform-runtime"]
+    "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-react-jsx-source"
+  ]
 }
 */
 [For babel-env and babel-react presets, and the babel-runtime plugin]
